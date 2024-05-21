@@ -1,23 +1,23 @@
 {
-  "name": "ng-django-job-matcher",
-  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "name": "ng-frontend",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "./src",
+  "sourceRoot": "ng-frontend/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/ng-django-job-matcher",
-        "index": "./src/index.html",
-        "browser": "./src/main.ts",
+        "outputPath": "dist/ng-frontend",
+        "index": "ng-frontend/src/index.html",
+        "browser": "ng-frontend/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "./tsconfig.app.json",
+        "tsConfig": "ng-frontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["./src/favicon.ico", "./src/assets"],
-        "styles": ["./src/styles.scss"],
+        "assets": ["ng-frontend/src/favicon.ico", "ng-frontend/src/assets"],
+        "styles": ["ng-frontend/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -48,10 +48,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "ng-django-job-matcher:build:production"
+          "buildTarget": "ng-frontend:build:production"
         },
         "development": {
-          "buildTarget": "ng-django-job-matcher:build:development"
+          "buildTarget": "ng-frontend:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -59,20 +59,17 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "ng-django-job-matcher:build"
+        "buildTarget": "ng-frontend:build"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["./src"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectName}"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "jest.config.ts"
+        "jestConfig": "ng-frontend/jest.config.ts"
       }
     }
   }

@@ -52,5 +52,6 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "ng-django-job-matcher"
+  "defaultProject": "ng-django-job-matcher",
+  "plugins": ["@nxlv/python"]
 }

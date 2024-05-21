@@ -15,13 +15,13 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome ng-django-job-matcher'
+      'Welcome ng-frontend'
     );
   });
 
-  it(`should have as title 'ng-django-job-matcher'`, () => {
+  it(`should have as title 'ng-frontend'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ng-django-job-matcher');
+    expect(app.title).toEqual('ng-frontend');
   });
 });

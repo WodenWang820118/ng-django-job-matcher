@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
+import { AppService } from './app.service';
 
 @Component({
   standalone: true,
@@ -10,5 +11,10 @@ import { NxWelcomeComponent } from './nx-welcome.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'ng-django-job-matcher';
+  title = 'ng-frontend';
+  constructor(private appService: AppService) {
+    this.appService.getBlogPosts().subscribe((data) => {
+      console.log(data);
+    });
+  }
 }
