@@ -10,6 +10,8 @@ npm install
 
 ## Backend
 
+Please install `poetry` for the backend development.
+
 cd to the `django-backend` folder and run the following commands to activate the virtual environment:
 
 ```bash
@@ -87,9 +89,12 @@ npm run dev-back
 The default port for the Angular frontend is 4200.
 
 ## TODOs
-- Use Exceljs to read uploaded XLSX data
-- Design shared schema between the frontend and the backend
-- Use Django to process data from the frontend
-- Calculate cosine similarity (Engish) and return the data to the frontend for further operations
-- Deploy the backend with render.com's product
-- Deploy the frontend with Netlify
+
+- Local functionality (Expect to finalize it at the end of May 2024)
+  - Use IndexedDB to cache the uploaded data and query the data later
+  - Design shared schema between the frontend and the backend
+  - Use Django to process data from the frontend
+  - Calculate cosine similarity (Engish) and return the data to the frontend for further operations
+- Online
+  - Deploy the backend with render.com's product
+  - Deploy the frontend with Netlify
