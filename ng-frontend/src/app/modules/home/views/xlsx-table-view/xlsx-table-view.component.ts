@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { tap } from 'rxjs';
 import { XlsxTableComponent } from '../../components/xlsx-table/xlsx-table.component';
 import { XlsxTableFieldsComponent } from '../../components/xlsx-table-fields/xlsx-table-fields.component';
 import { NotificationCardComponent } from '../../../../shared/components/notification-card/notification-card.component';
-import { XlsxService } from '../../../../shared/services/xlsx/xlsx.service';
+import { XlsxPubSubService } from '../../../../shared/services/xlsx-pub-sub/xlsx-pub-sub.service';
+import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
@@ -13,32 +15,51 @@ import { XlsxService } from '../../../../shared/services/xlsx/xlsx.service';
     XlsxTableFieldsComponent,
     NotificationCardComponent,
     MatCardModule,
+    MatButtonModule,
+    RouterLink,
   ],
   selector: 'app-xlsx-table-view',
-  template: ` <div class="xlsx-table-view">
+  template: `
     @if (hasData) {
-    <app-xlsx-table-fields
-      class="xlsx-table-view__fields"
-    ></app-xlsx-table-fields>
-    <ng-container>
+    <div class="xlsx-table-view">
+      <app-xlsx-table-fields
+        class="xlsx-table-view__fields"
+      ></app-xlsx-table-fields>
       <app-xlsx-table class="xlsx-table-view__table"></app-xlsx-table>
-    </ng-container>
+    </div>
+    <div class="xlsx-table-view__actions">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="onSaveColumns()"
+        [routerLink]="['..', 'validation']"
+      >
+        Save
+      </button>
+    </div>
     } @else {
-    <app-notification-card>
-      <p>No data available.</p>
-    </app-notification-card>
+    <div class="xlsx-table-view__fields">
+      <app-notification-card>
+        <p>No data available.</p>
+      </app-notification-card>
+    </div>
     }
-  </div>`,
+  `,
   styles: [
     `
       .xlsx-table-view {
-        width: 900px;
-        height: 500px;
         display: flex;
         flex-direction: row;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         gap: 2rem;
+        padding: 1rem;
+
+        &__actions {
+          display: flex;
+          justify-content: flex-end;
+          padding-right: 1rem;
+        }
 
         &__card {
           width: 50%;
@@ -64,8 +85,10 @@ import { XlsxService } from '../../../../shared/services/xlsx/xlsx.service';
 })
 export class XlsxTableViewComponent {
   hasData = false;
-  constructor(private xlsxService: XlsxService) {
-    this.xlsxService
+  @ViewChild(XlsxTableFieldsComponent)
+  xlsxTableFieldsComponent!: XlsxTableFieldsComponent;
+  constructor(private xlsxPubSubService: XlsxPubSubService) {
+    this.xlsxPubSubService
       .getDataSource()
       .pipe(
         tap((data) => {
@@ -73,5 +96,9 @@ export class XlsxTableViewComponent {
         })
       )
       .subscribe();
+  }
+
+  onSaveColumns(): void {
+    this.xlsxTableFieldsComponent.onSaveColumns();
   }
 }

@@ -6,8 +6,8 @@ import { catchError, take, tap } from 'rxjs';
 import { FileDropDirective } from './../../../../shared/directives/filedrop.directive';
 import { ErrorDialogComponent } from '../../../../shared/components/error-dialog/error-dialog.component';
 import { FileService } from '../../../../shared/services/file/file.service';
-import { XlsxService } from '../../../../shared/services/xlsx/xlsx.service';
-import { Router } from '@angular/router';
+import { XlsxPubSubService } from '../../../../shared/services/xlsx-pub-sub/xlsx-pub-sub.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     ErrorDialogComponent,
     FileDropDirective,
+    RouterLink,
   ],
   selector: 'app-upload-card',
   templateUrl: './upload-card.component.html',
@@ -27,7 +28,7 @@ export class UploadCardComponent {
   constructor(
     public dialog: MatDialog,
     private fileService: FileService,
-    private xlsxService: XlsxService,
+    private xlsxPubSubService: XlsxPubSubService,
     private router: Router
   ) {}
 
@@ -45,7 +46,7 @@ export class UploadCardComponent {
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       ) {
         this.files.push(file);
-        this.xlsxService.loadXlsxFile(file).subscribe();
+        this.xlsxPubSubService.loadXlsxFile(file).subscribe();
       } else {
         this.dialog.open(ErrorDialogComponent, {
           data: {
@@ -93,10 +94,5 @@ export class UploadCardComponent {
 
   onFilesHovered(isHovered: boolean) {
     // Handle hover state if needed
-  }
-
-  onCacheFile() {
-    // TODO: once the file is cached, navigate to the table view
-    this.router.navigate(['/table']);
   }
 }
