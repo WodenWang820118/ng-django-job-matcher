@@ -54,10 +54,10 @@ import { MatButtonModule } from '@angular/material/button';
         }
 
         &__content {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
+          // display: flex;
+          // flex-direction: row;
+          // justify-content: center;
+          // align-items: center;
         }
       }
     `,

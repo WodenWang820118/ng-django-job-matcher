@@ -16,25 +16,25 @@ import { RouterLink } from '@angular/router';
   ],
   template: `
     <mat-nav-list class="nav-list">
-      <mat-list-item>
+      <mat-list-item [routerLink]="['/', 'portfolio']">
+        <mat-icon matListItemIcon>keyboard_backspace</mat-icon>
+        <div matListItemTitle>Back to Portfolio</div>
+      </mat-list-item>
+      <mat-list-item [routerLink]="['./']">
         <mat-icon matListItemIcon>receipt</mat-icon>
-        <div matListItemTitle [routerLink]="['/']">Resume</div>
+        <div matListItemTitle>Resume</div>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item [routerLink]="['./', 'upload']">
         <mat-icon matListItemIcon>cloud_upload</mat-icon>
-        <div matListItemTitle [routerLink]="['/', 'upload']">Company Data</div>
+        <div matListItemTitle>Company Data</div>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item [routerLink]="['./', 'xlsx-table']">
         <mat-icon matListItemIcon>table_chart</mat-icon>
-        <div matListItemTitle [routerLink]="['/', 'table']">
-          Column Selection
-        </div>
+        <div matListItemTitle>Column Selection</div>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item [routerLink]="['./', 'validation']">
         <mat-icon matListItemIcon>dashboard</mat-icon>
-        <div matListItemTitle [routerLink]="['/', 'score-board']">
-          Matching Scores
-        </div>
+        <div matListItemTitle>Validation</div>
       </mat-list-item>
     </mat-nav-list>
   `,

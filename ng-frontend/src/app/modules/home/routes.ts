@@ -23,19 +23,24 @@ export const HOME_ROUTES: Route[] = [
           ),
       },
       {
-        path: 'table',
+        path: 'xlsx-table',
         loadComponent: () =>
           import('./views/xlsx-table-view/xlsx-table-view.component').then(
             (m) => m.XlsxTableViewComponent
           ),
       },
       {
-        path: 'score-board',
+        path: 'validation',
         loadComponent: () =>
-          import('./views/score-board-view/score-board-view.component').then(
-            (m) => m.ScoreBoardViewComponent
+          import('./views/validation-view/validation-view.component').then(
+            (m) => m.ValidationViewComponent
           ),
       },
     ],
+  },
+  {
+    path: 'portfolio',
+    loadChildren: () =>
+      import('../portfolio/routes').then((m) => m.PORTFOLIO_ROUTES),
   },
 ];

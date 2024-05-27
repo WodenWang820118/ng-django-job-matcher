@@ -41,7 +41,11 @@
         <button mat-flat-button color="warn" (click)="files = []">
           Remove
         </button>
-        <button mat-flat-button color="primary" (click)="onCacheFile()">
+        <button
+          mat-flat-button
+          color="primary"
+          [routerLink]="['../', 'xlsx-table']"
+        >
           Save
         </button>
       </div>
