@@ -9,8 +9,11 @@ export const PORTFOLIO_ROUTES: Route[] = [
       ).then((m) => m.PortfolioDetailViewComponent),
   },
   {
-    path: 'build-portfolio',
-    loadChildren: () => import('../home/routes').then((m) => m.HOME_ROUTES),
+    path: 'portfolio-builder',
+    loadChildren: () =>
+      import('../portfolio-builder/routes').then(
+        (m) => m.PORTFOLIO_BUILDER_ROUTES
+      ),
   },
   {
     path: '',

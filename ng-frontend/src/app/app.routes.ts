@@ -12,8 +12,10 @@ export const appRoutes: Route[] = [
       import('./modules/portfolio/routes').then((m) => m.PORTFOLIO_ROUTES),
   },
   {
-    path: 'build-portfolio',
+    path: 'portfolio-builder',
     loadChildren: () =>
-      import('./modules/home/routes').then((m) => m.HOME_ROUTES),
+      import('./modules/portfolio-builder/routes').then(
+        (m) => m.PORTFOLIO_BUILDER_ROUTES
+      ),
   },
 ];

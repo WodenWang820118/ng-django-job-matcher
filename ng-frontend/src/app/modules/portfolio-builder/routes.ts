@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-export const HOME_ROUTES: Route[] = [
+export const PORTFOLIO_BUILDER_ROUTES: Route[] = [
   {
     path: '',
     loadComponent: () =>
