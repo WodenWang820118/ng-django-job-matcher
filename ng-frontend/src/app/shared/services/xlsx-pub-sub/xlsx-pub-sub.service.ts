@@ -3,13 +3,15 @@ import {
   BehaviorSubject,
   catchError,
   combineLatest,
+  map,
+  Observable,
+  of,
   Subject,
   take,
   tap,
 } from 'rxjs';
 import { WebWorkerService } from '../web-worker/web-worker.service';
 import { FileService } from '../file/file.service';
-import { PortfolioStorageService } from '../portfolio-storage/portfolio-storage.service';
 import { SessionStorageService } from '../session-storage/session-storage.service';
 
 @Injectable({
@@ -22,7 +24,6 @@ export class XlsxPubSubService {
   constructor(
     private webWorkerService: WebWorkerService,
     private fileService: FileService,
-    private portfolioStorageService: PortfolioStorageService,
     private sessionStorageService: SessionStorageService
   ) {
     this.addXlsxDataListener();
@@ -45,24 +46,25 @@ export class XlsxPubSubService {
     );
   }
 
-  addXlsxDataListener() {
-    this.webWorkerService
-      .onMessage()
-      .pipe(
-        tap(
-          (message: { action: string; data: { [key: string]: string }[] }) => {
-            if (message.action === 'transformedData') {
-              this.displayedColumns.next(Object.keys(message.data[0]));
-              this.dataSource.next(message.data);
-              this.portfolioStorageService.setCurrentCompanyData(message.data);
-              this.portfolioStorageService.setCurrentColumns(
-                Object.keys(message.data[0])
-              );
-            }
-          }
-        )
-      )
-      .subscribe();
+  addXlsxDataListener(): Observable<
+    {
+      [key: string]: string;
+    }[]
+  > {
+    return this.webWorkerService.onMessage().pipe(
+      map((message: { action: string; data: { [key: string]: string }[] }) => {
+        if (message.action === 'transformedData') {
+          this.displayedColumns.next(Object.keys(message.data[0]));
+          this.dataSource.next(message.data);
+          return message.data;
+        }
+        return [];
+      }),
+      catchError((error) => {
+        console.error('Error reading XLSX data: ', error);
+        return of([]);
+      })
+    );
   }
 
   addSessionStorageListener() {

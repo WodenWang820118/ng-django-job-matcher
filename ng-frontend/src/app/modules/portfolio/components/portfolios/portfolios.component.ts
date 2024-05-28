@@ -1,8 +1,7 @@
 import { RouterLink } from '@angular/router';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { Observable } from 'rxjs';
 import { PortfolioComponent } from './../portfolio/portfolio.component';
 import { Portfolio } from '../../../../shared/interfaces/portfolio.interface';
 
@@ -13,7 +12,7 @@ import { Portfolio } from '../../../../shared/interfaces/portfolio.interface';
   template: `
     <div class="portfolios">
       <div class="portfolios__items">
-        <div class="portfolios__new" [routerLink]="['/', 'build-portfolio']">
+        <div class="portfolios__new" [routerLink]="['/', 'portfolio-builder']">
           <mat-card>
             <mat-card-header>
               <mat-card-title>New Portfolio</mat-card-title>
@@ -27,7 +26,7 @@ import { Portfolio } from '../../../../shared/interfaces/portfolio.interface';
         @for (portfolio of portfolios; track portfolio.id) {
         <app-portfolio
           [portfolio]="portfolio"
-          [routerLink]="['/portfolio', portfolio.id]"
+          [routerLink]="['portfolio-detail', portfolio.id]"
           [state]="{ id: portfolio.id }"
         ></app-portfolio>
         }

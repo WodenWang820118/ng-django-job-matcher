@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { ResumeComponent } from '../../components/resume/resume.component';
+import { ResumeFormComponent } from '../../components/resume-form/resume-form.component';
 
 @Component({
   standalone: true,
-  imports: [ResumeComponent],
+  imports: [ResumeFormComponent],
   selector: 'app-resume-view',
   template: `
     <div class="resume-view">
-      <app-resume></app-resume>
+      <app-resume-form></app-resume-form>
     </div>
   `,
   styles: [

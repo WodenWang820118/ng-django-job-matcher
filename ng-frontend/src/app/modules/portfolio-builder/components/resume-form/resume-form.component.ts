@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { PortfolioStorageService } from '../../../../shared/services/portfolio-storage/portfolio-storage.service';
 
@@ -26,7 +26,11 @@ import { PortfolioStorageService } from '../../../../shared/services/portfolio-s
   ],
   selector: 'app-resume-form',
   template: `
-    <form [formGroup]="resumeForm" class="resume-form">
+    <form
+      [formGroup]="resumeForm"
+      class="resume-form"
+      (ngSubmit)="onSaveResume()"
+    >
       <mat-form-field class="resume-form__field">
         <mat-label>Input the resume</mat-label>
         <textarea
@@ -36,12 +40,16 @@ import { PortfolioStorageService } from '../../../../shared/services/portfolio-s
           rows="20"
         ></textarea>
       </mat-form-field>
+      <div class="resume-form__actions">
+        <button mat-raised-button color="primary" type="submit">Save</button>
+      </div>
     </form>
   `,
   styles: [
     `
       .resume-form {
         width: 100%;
+        height: auto;
 
         &__field {
           width: 100%;
@@ -63,7 +71,9 @@ export class ResumeFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    public portfolioStorageService: PortfolioStorageService
+    public portfolioStorageService: PortfolioStorageService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +88,14 @@ export class ResumeFormComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+
+  onSaveResume() {
+    const resumeValue = this.resumeForm.controls.resume.value;
+    if (!resumeValue) return;
+
+    this.portfolioStorageService.setCurrentResume(resumeValue);
+    this.router.navigate(['upload'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

@@ -20,7 +20,7 @@ export class AppDB extends Dexie {
 
   getPortfolio(id: string) {
     return liveQuery(() => {
-      return this.portfolio.where('id').equals(id).toArray();
+      return this.portfolio.where('id').equals(id).first();
     });
   }
 
@@ -28,21 +28,22 @@ export class AppDB extends Dexie {
     return from(this.portfolio.add(list));
   }
 
-  clearPortfolito() {
+  clearPortfolio() {
     return from(this.portfolio.clear());
   }
 
-  deleteList(id: string) {
+  deletePortfolio(id: string) {
     return from(this.portfolio.delete(id));
   }
 
-  updatePortfolio(id: string, updatedPortfolio: Portfolio) {
-    return db.getPortfolios().subscribe((portfolios) => {
-      console.log(portfolios);
-      const portfolio = portfolios.find((portfolio) => portfolio.id === id);
+  updatePortfolio(id: string, updatedPortfolio: Partial<Portfolio>) {
+    const subscription = db.getPortfolio(id).subscribe(async (portfolio) => {
       if (!portfolio) return;
-      this.portfolio.put(updatedPortfolio);
+      const finalPortfolio = { ...portfolio, ...updatedPortfolio };
+      await this.portfolio.put(finalPortfolio);
+      subscription.unsubscribe();
     });
+    return subscription;
   }
 }
 

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Portfolio } from 'ng-frontend/src/app/shared/interfaces/portfolio.interface';
+import { Portfolio } from '../../../../shared/interfaces/portfolio.interface';
 
 @Component({
   selector: 'app-portfolio',

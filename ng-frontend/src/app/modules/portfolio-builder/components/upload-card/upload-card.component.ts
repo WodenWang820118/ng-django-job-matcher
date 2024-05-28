@@ -3,18 +3,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError, take, tap } from 'rxjs';
+import { RouterLink } from '@angular/router';
 import { FileDropDirective } from './../../../../shared/directives/filedrop.directive';
-import { ErrorDialogComponent } from '../../../../shared/components/error-dialog/error-dialog.component';
+import { InfoDialogComponent } from '../../../../shared/components/info-dialog/info-dialog.component';
 import { FileService } from '../../../../shared/services/file/file.service';
 import { XlsxPubSubService } from '../../../../shared/services/xlsx-pub-sub/xlsx-pub-sub.service';
-import { Router, RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
   imports: [
     MatCardModule,
     MatButtonModule,
-    ErrorDialogComponent,
+    InfoDialogComponent,
     FileDropDirective,
     RouterLink,
   ],
@@ -28,8 +28,7 @@ export class UploadCardComponent {
   constructor(
     public dialog: MatDialog,
     private fileService: FileService,
-    private xlsxPubSubService: XlsxPubSubService,
-    private router: Router
+    private xlsxPubSubService: XlsxPubSubService
   ) {}
 
   onFileSelected(event: any): void {
@@ -48,9 +47,11 @@ export class UploadCardComponent {
         this.files.push(file);
         this.xlsxPubSubService.loadXlsxFile(file).subscribe();
       } else {
-        this.dialog.open(ErrorDialogComponent, {
+        this.dialog.open(InfoDialogComponent, {
           data: {
+            title: 'Invalid file',
             message: 'Please upload a valid JSON file.',
+            buttonText: 'OK',
           },
         });
       }
@@ -64,22 +65,25 @@ export class UploadCardComponent {
         take(1),
         tap((arrayBuffer) => {
           try {
-            // TODO: pass the data to other service to preview the data
             const text = new TextDecoder().decode(arrayBuffer);
             const json = JSON.parse(text);
             console.log('Parsed JSON: ', json);
           } catch (error) {
-            this.dialog.open(ErrorDialogComponent, {
+            this.dialog.open(InfoDialogComponent, {
               data: {
+                title: 'Invalid file',
                 message: 'Please upload a valid JSON file.',
+                buttonText: 'OK',
               },
             });
           }
         }),
         catchError((error) => {
-          this.dialog.open(ErrorDialogComponent, {
+          this.dialog.open(InfoDialogComponent, {
             data: {
+              title: 'Invalid file',
               message: 'Please upload a valid JSON file.',
+              buttonText: 'OK',
             },
           });
           return error;
