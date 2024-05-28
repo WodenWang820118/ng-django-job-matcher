@@ -42,7 +42,9 @@ export class PortfolioBuilderService {
   }
 
   withCompanyData(companyData: { [key: string]: string }[]) {
-    this.companyData = companyData;
+    this.companyData = companyData.map((data) => {
+      return { id: uuidv4(), ...data };
+    });
     return this;
   }
 

@@ -1,0 +1,25 @@
+.portfolio-detail {
+  margin: 0 auto;
+  max-width: 1280px;
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    &__elem {
+      flex: 1;
+      max-height: 450px !important;
+      overflow: auto !important;
+    }
+  }
+}
+
+.info-card {
+  flex: 1;
+}
+
+.resume-card {
+  flex: 2;
+}

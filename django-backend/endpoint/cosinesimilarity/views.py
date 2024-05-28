@@ -20,9 +20,11 @@ def cosine_similarity_view(request):
     if not isinstance(company_texts, list):
         return Response({'error': 'company_texts must be a list.'}, status=status.HTTP_400_BAD_REQUEST)
 
+    # Extract texts for TF-IDF calculation
+    texts = [resume] + [item['text'] for item in company_texts]
+    
     # Calculate TF-IDF and cosine similarity
     tfidf_vectorizer = TfidfVectorizer()
-    texts = [resume] + company_texts
     tfidf_matrix = tfidf_vectorizer.fit_transform(texts)
     
     resume_vector = tfidf_matrix[0:1]
@@ -31,10 +33,10 @@ def cosine_similarity_view(request):
     similarities = cosine_similarity(resume_vector, company_vectors)[0]
 
     results = []
-    for company_text, similarity in zip(company_texts, similarities):
+    for item, similarity in zip(company_texts, similarities):
         results.append({
-            'company_text': company_text,
-            'cosine_similarity': similarity
+            'id': item['id'],
+            'score': similarity
         })
 
     return Response({

@@ -1,0 +1,33 @@
+<app-sidenav-container>
+  <div class="portfolio-detail">
+    <div class="portfolio-detail__row">
+      <app-card-portfolio-info
+        class="portfolio-detail__row__elem info-card"
+        [portfolioId]="portfolioId"
+        [name]="name"
+        [description]="description"
+      ></app-card-portfolio-info>
+      <app-card-resume
+        class="portfolio-detail__row__elem resume-card"
+        [resume]="resume"
+      ></app-card-resume>
+    </div>
+    <div class="portfolio-detail__row">
+      <app-card-company-data
+        class="portfolio-detail__row__elem"
+        [dataSource]="dataSource"
+        [displayedColumns]="displayedColumns"
+      >
+      </app-card-company-data>
+    </div>
+    <div class="portfolio-detail__row">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="calculateCosineSimilarity()"
+      >
+        Calculate Portfolio
+      </button>
+    </div>
+  </div>
+</app-sidenav-container>
