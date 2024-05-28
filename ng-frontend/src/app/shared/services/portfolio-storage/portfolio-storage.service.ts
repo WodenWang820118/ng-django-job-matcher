@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { SessionStorageService } from '../session-storage/session-storage.service';
 import { db } from '../../../db';
 import { Portfolio } from '../../interfaces/portfolio.interface';
+import { XlsxPubSubService } from '../xlsx-pub-sub/xlsx-pub-sub.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,14 @@ export class PortfolioStorageService {
   currentPortfolioId: Subject<string> = new Subject<string>();
   currentPortfolioId$: Observable<string> =
     this.currentPortfolioId.asObservable();
+
+  currentPortfolioName: Subject<string> = new Subject<string>();
+  currentPortfolioName$: Observable<string> =
+    this.currentPortfolioName.asObservable();
+
+  currentPortfolioDescription: Subject<string> = new Subject<string>();
+  currentPortfolioDescription$: Observable<string> =
+    this.currentPortfolioDescription.asObservable();
 
   currentItemId: Subject<string> = new Subject<string>();
   currentItemId$: Observable<string> = this.currentItemId.asObservable();
@@ -30,7 +39,17 @@ export class PortfolioStorageService {
   selectedColumns: Subject<string[]> = new Subject<string[]>();
   selectedColumns$: Observable<string[]> = this.selectedColumns.asObservable();
 
-  constructor(private sessionStorageService: SessionStorageService) {}
+  constructor(
+    private sessionStorageService: SessionStorageService,
+    private xlsxPubSubService: XlsxPubSubService
+  ) {
+    this.xlsxPubSubService.addXlsxDataListener().subscribe((data) => {
+      if (data.length === 0) return;
+      console.log(data);
+      this.setCurrentColumns(Object.keys(data[0]));
+      this.setCurrentCompanyData(data);
+    });
+  }
 
   setCurrentPortfolioId(id: string) {
     this.currentPortfolioId.next(id);
@@ -57,8 +76,26 @@ export class PortfolioStorageService {
     this.sessionStorageService.setSelectedColumns(columns);
   }
 
+  setCurrentPortfolioName(name: string) {
+    this.currentPortfolioName.next(name);
+    this.sessionStorageService.setCurrentPortfolioName(name);
+  }
+
+  setCurrentPortfolioDescription(description: string) {
+    this.currentPortfolioDescription.next(description);
+    this.sessionStorageService.setCurrentPortfolioDescription(description);
+  }
+
   getCurrentPortfolioId() {
     return this.sessionStorageService.getCurrentPortfolioId();
+  }
+
+  getCurrentPortfolioName() {
+    return this.sessionStorageService.getCurrentPortfolioName();
+  }
+
+  getCurrentPortfolioDescription() {
+    return this.sessionStorageService.getCurrentPortfolioDescription();
   }
 
   getCurrentResume() {
@@ -94,5 +131,9 @@ export class PortfolioStorageService {
       resume: portfolio.resume,
       companyData: portfolio.companyData,
     });
+  }
+
+  clearSessionStorage() {
+    this.sessionStorageService.clearStorage();
   }
 }

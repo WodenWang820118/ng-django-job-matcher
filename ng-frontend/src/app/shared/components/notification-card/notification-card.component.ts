@@ -7,10 +7,9 @@ import { MatCardModule } from '@angular/material/card';
   imports: [MatCardModule],
   template: `
     <mat-card class="notification-card">
-      <mat-card-title class="notification-card__header"
-        >Notification</mat-card-title
-      >
-      <br />
+      <mat-card-header class="notification-card__header">
+        <mat-card-title>Notification</mat-card-title>
+      </mat-card-header>
       <mat-card-content class="notification-card__content">
         <ng-content></ng-content>
       </mat-card-content>
@@ -38,6 +37,4 @@ import { MatCardModule } from '@angular/material/card';
     `,
   ],
 })
-export class NotificationCardComponent {
-  constructor() {}
-}
+export class NotificationCardComponent {}

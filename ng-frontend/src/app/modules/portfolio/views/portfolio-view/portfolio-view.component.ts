@@ -11,7 +11,6 @@ import { Portfolio } from '../../../../shared/interfaces/portfolio.interface';
   selector: 'app-portfolio-view',
   template: `
     <app-sidenav-container>
-      <!-- <app-sidenav-list></app-sidenav-list> -->
       <div class="portfolio-view">
         <app-portfolios [portfolios]="portfolios"></app-portfolios>
       </div>
@@ -20,8 +19,6 @@ import { Portfolio } from '../../../../shared/interfaces/portfolio.interface';
   styles: [
     `
       .portfolio-view {
-        display: flex;
-        flex-direction: row;
         padding: 10rem 5rem;
       }
     `,

@@ -11,6 +11,14 @@ export class SessionStorageService {
     sessionStorage.setItem('CurrentPortfolioId', id);
   }
 
+  setCurrentPortfolioName(name: string) {
+    sessionStorage.setItem('CurrentPortfolioName', name);
+  }
+
+  setCurrentPortfolioDescription(description: string) {
+    sessionStorage.setItem('CurrentPortfolioDescription', description);
+  }
+
   setCurrentResume(resume: string) {
     sessionStorage.setItem('CurrentResume', resume);
   }
@@ -50,6 +58,34 @@ export class SessionStorageService {
       map((resume) => {
         if (resume) {
           return resume;
+        }
+        return '';
+      }),
+      catchError((error) => {
+        return error.message as Observable<string>;
+      })
+    );
+  }
+
+  getCurrentPortfolioName() {
+    return from([sessionStorage.getItem('CurrentPortfolioName')]).pipe(
+      map((name) => {
+        if (name) {
+          return name;
+        }
+        return '';
+      }),
+      catchError((error) => {
+        return error.message as Observable<string>;
+      })
+    );
+  }
+
+  getCurrentPortfolioDescription() {
+    return from([sessionStorage.getItem('CurrentPortfolioDescription')]).pipe(
+      map((description) => {
+        if (description) {
+          return description;
         }
         return '';
       }),
@@ -113,5 +149,9 @@ export class SessionStorageService {
         return error.message as Observable<{ [key: string]: string }>;
       })
     );
+  }
+
+  clearStorage() {
+    sessionStorage.clear();
   }
 }

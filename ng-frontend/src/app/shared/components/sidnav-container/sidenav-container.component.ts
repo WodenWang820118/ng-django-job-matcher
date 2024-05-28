@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav-container',
@@ -14,14 +15,19 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatListModule,
     MatButtonModule,
+    RouterLink,
   ],
   template: `
     <div class="sidenav-container">
       <mat-toolbar color="primary" class="sidenav-container__toolbar">
+        @if (router.url.includes('/portfolio-builder')) {
         <button mat-icon-button (click)="snav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-        <h1 class="example-app-name">Job Matcher</h1>
+        }
+        <h1 class="sidenav-container__title" [routerLink]="['/']">
+          Job Matcher
+        </h1>
       </mat-toolbar>
       <mat-sidenav-container class="sidenav-container__content-container">
         <mat-sidenav #snav>
@@ -49,18 +55,17 @@ import { MatButtonModule } from '@angular/material/button';
           z-index: 2;
         }
 
-        &__content-container {
-          flex: 1;
+        &__title {
+          cursor: pointer;
         }
 
-        &__content {
-          // display: flex;
-          // flex-direction: row;
-          // justify-content: center;
-          // align-items: center;
+        &__content-container {
+          flex: 1;
         }
       }
     `,
   ],
 })
-export class SidenavContainerComponent {}
+export class SidenavContainerComponent {
+  constructor(public router: Router) {}
+}

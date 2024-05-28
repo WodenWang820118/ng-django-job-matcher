@@ -29,14 +29,6 @@ interface Column {
         <mat-card-title class="xlsx-table-fields__header"
           >Fields</mat-card-title
         >
-        <!-- <mat-checkbox
-          class="example-margin"
-          [checked]="allSelected"
-          [indeterminate]="someSelected()"
-          (change)="setAll($event.checked)"
-        >
-          Select All
-        </mat-checkbox> -->
         <mat-card-content class="xlsx-table-fields__content">
           @for (column of columns; track column) {
           <mat-checkbox
@@ -54,8 +46,7 @@ interface Column {
   styles: [
     `
       .xlsx-table-fields {
-        overflow: auto;
-        max-height: 550px;
+        height: 100%;
 
         &__header {
           padding: 1rem;
