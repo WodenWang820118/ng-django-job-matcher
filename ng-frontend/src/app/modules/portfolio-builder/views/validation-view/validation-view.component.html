@@ -1,0 +1,33 @@
+<div class="validation-view">
+  @if (hasData) {
+  <div class="validation-view__row">
+    <app-xlsx-table-fields
+      class="validation-view__row__fields"
+    ></app-xlsx-table-fields>
+    <app-card-company-data
+      class="validation-view__row__company-data"
+      [dataSource]="companyData"
+      [displayedColumns]="displayedColumns"
+    ></app-card-company-data>
+  </div>
+  <div class="validation-view__row">
+    <app-card-resume
+      class="validation-view__row__resume"
+      [resume]="resume"
+    ></app-card-resume>
+    <app-card-portfolio-edit
+      class="validation-view__row__portfolio"
+    ></app-card-portfolio-edit>
+  </div>
+  } @else {
+  <div class="validation-view__empty">
+    <app-notification-card>
+      <div class="notification-card__content">
+        <p class="notification-card__content__text">
+          No data to validate. Please complete the portfolio building process.
+        </p>
+      </div>
+    </app-notification-card>
+  </div>
+  }
+</div>

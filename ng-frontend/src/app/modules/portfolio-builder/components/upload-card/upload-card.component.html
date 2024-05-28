@@ -1,0 +1,55 @@
+<div class="upload-card">
+  <mat-card>
+    <mat-card-header class="upload-card__header">
+      <mat-card-title>File Upload</mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content class="upload-card__contents">
+      <div
+        class="upload-card__contents__dropzone"
+        appFileDrop
+        (filesDropped)="onFileDropped($event)"
+        (filesHovered)="onFilesHovered($event)"
+      >
+        <img src="../../../../assets/upload.jpg" alt="Upload" width="400" />
+        <input hidden type="file" (change)="onFileSelected($event)" />
+        @if (files.length === 0) {
+        <label>Drag and Drop your XLSX file</label>
+        } @else {
+        <label>File uploaded: {{ files[0].name }}</label>
+        }
+      </div>
+      <br />
+      <div></div>
+    </mat-card-content>
+    <mat-card-actions>
+      @if (files.length === 0) {
+      <div class="upload-card__browse">
+        <button mat-flat-button color="primary" (click)="fileInput.click()">
+          Browse
+        </button>
+        <input
+          hidden
+          (change)="onFileSelected($event)"
+          #fileInput
+          type="file"
+        />
+      </div>
+
+      } @else {
+      <div class="upload-card__actions">
+        <button mat-flat-button color="warn" (click)="files = []">
+          Remove
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          [routerLink]="['../', 'xlsx-table']"
+        >
+          Save
+        </button>
+      </div>
+      }
+    </mat-card-actions>
+  </mat-card>
+</div>

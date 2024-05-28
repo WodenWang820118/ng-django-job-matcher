@@ -1,5 +1,14 @@
 # ng-django-job-matcher
 
+## Overview
+
+The project aims to match the given resume and a list of job descriptions or company information by the cosine similarity. The goal is to use it with traditional Chinese and English together.
+
+## Storage
+
+- sessionStorage: it is for portfolio-building processes
+- indexeddb: it is for better data management
+
 ## Nx Workspace
 
 Please run the following command to install the required dependencies:
@@ -9,6 +18,8 @@ npm install
 ```
 
 ## Backend
+
+Please install `poetry` for the backend development.
 
 cd to the `django-backend` folder and run the following commands to activate the virtual environment:
 
@@ -30,7 +41,27 @@ Keep the virtual environment to run other Python commands.
 npm run dev-back
 ```
 
-The default port for the Django backend is 8000.
+The default port for the Django backend is 8000. To test the backend, use the following data with `http://localhost:8000/api/cosinesimilarity/`:
+
+```json
+{
+  "resume": "Experienced software developer with expertise in Python and Django.",
+  "company_texts": [
+    {
+      "id": "1",
+      "text": "We are looking for an experienced software developer with expertise in Python and Django."
+    },
+    {
+      "id": "2",
+      "text": "We are looking for a software developer with expertise in Python and Django."
+    },
+    {
+      "id": "3",
+      "text": "We are looking for a software developer with expertise in Python."
+    }
+  ]
+}
+```
 
 ### Create an endpoint
 
@@ -42,20 +73,10 @@ After adding an endpoint app, the following documents are generated:
   - urls.py
   - wsgi.py
 
-I created another folder called `myapp` to store the endpoint app. The folder structure is as follows:
-
-- myapp
-  - migrations
-  - templates
-  - apps.py
-  - models.py
-  - urls.py
-  - views.py
-
-After managing the endpoint app, run the following command to create a migration:
+After managing the endpoint app, in the `endpoint` folder, run the following command to create a migration:
 
 ```bash
-python manage.py makemigrations myapp
+python manage.py makemigrations <appname>
 ```
 
 Then, run the following command to apply the migration:
@@ -64,11 +85,7 @@ Then, run the following command to apply the migration:
 python manage.py migrate
 ```
 
-From the browser, you can access the endpoint by visiting the following URL:
-
-```bash
-http://localhost:8000/api/blogposts/
-```
+Please refer to the [official documentation](https://docs.djangoproject.com/en/5.0/topics/migrations/) for details.
 
 ## Frontend
 
@@ -87,9 +104,11 @@ npm run dev-back
 The default port for the Angular frontend is 4200.
 
 ## TODOs
-- Use Exceljs to read uploaded XLSX data
-- Design shared schema between the frontend and the backend
-- Use Django to process data from the frontend
-- Calculate cosine similarity (Engish) and return the data to the frontend for further operations
-- Deploy the backend with render.com's product
-- Deploy the frontend with Netlify
+
+- Online
+  - Deploy the backend with render.com's product
+  - Deploy the frontend with Netlify
+- Frontend
+  - Portfolio resume edit functionality
+- Design
+  - UI/UX

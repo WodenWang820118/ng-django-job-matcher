@@ -1,0 +1,32 @@
+.validation-view {
+  max-width: 1280px;
+  margin: 0 auto;
+
+  &__row {
+    display: flex;
+    margin-top: 2rem;
+    gap: 1rem;
+
+    &__company-data,
+    &__fields {
+      max-height: 550px;
+      overflow: auto;
+    }
+
+    &__fields {
+      flex: 1;
+    }
+
+    &__company-data {
+      flex: 3;
+    }
+
+    &__resume,
+    &__portfolio {
+      min-height: 300px;
+      max-height: 500px;
+      overflow: auto;
+      flex: 1;
+    }
+  }
+}
